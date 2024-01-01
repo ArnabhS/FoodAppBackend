@@ -6,6 +6,7 @@ app.listen(3000)
 
 let users={};
 app.get('/users', (req,res)=>{
+    console.log(req.query);
     res.send(users);
 })
 
@@ -20,7 +21,7 @@ app.post('/users', (req, res)=>{
 
 
 // update --> patch
-app.patch('/user', (req,res)=>{
+app.patch('/users', (req,res)=>{
     console.log('req.body-->', req.body);
     let dataTobeUpdated=req.body;
     for(key in req.body){
@@ -31,9 +32,17 @@ app.patch('/user', (req,res)=>{
     })
 });
 
-app.delete('/user', (req,res)=>{
+app.delete('/users', (req,res)=>{
     users={};
     res.json({
         message:"data deleted"
     })
+})
+
+// parameters
+
+app.get('/users/:id', (req, res)=>{
+    console.log(req.params.id);
+    res.send(" user id recieved");
+    
 })
