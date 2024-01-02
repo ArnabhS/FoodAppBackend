@@ -13,6 +13,8 @@
         <input type="text">
         <label for="">password</label>
         <input type="password">
+        <label for="">Confirm password</label>
+        <input type="password">
         <button>Sign Up</button>
     </form>
     <!-- //axios fetch -->
@@ -27,8 +29,9 @@
             let name=document.querySelector("input[type='text']").value;
             let password=document.querySelector("input[type='password']").value;
             
+            let confirmPassword=document.querySelector("input[type='password']").value;
             
-            let resp=await axios.post('/auth/signup',{email, name, password})
+            let resp=await axios.post('/auth/signup',{email, name, password, confirmPassword})
 
             console.log('resp', resp);
         })
