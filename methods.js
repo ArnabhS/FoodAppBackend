@@ -39,12 +39,13 @@ userRouter
 
 authRouter
 .route('/signup')
-.get(getSignUp)
+.get(middleware1,getSignUp, middleware2)
 .post(postSignUp)
 
 
 
 function getUser(req,res){
+    
     res.send(users);
 }
 
@@ -81,8 +82,21 @@ function getUserbyId(req, res){
     
 }
 
-function getSignUp(req, res){
+function middleware1(req, res, next){
+    console.log("middleware1 Encountered");
+    next();
+}
+function middleware2(req, res){
+    console.log("middleware2 Encountered");
+    //next();
+    
     res.sendFile('/public/index.html',{root:__dirname})
+}
+
+function getSignUp(req, res, next){
+    console.log("getsignup called");
+    
+    next();
 }
 
 function postSignUp(req, res){
