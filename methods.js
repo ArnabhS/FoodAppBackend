@@ -4,24 +4,53 @@ const app = express()
 app.use(express.json());
 app.listen(3000)
 
-let users={};
-app.get('/users', (req,res)=>{
-    console.log(req.query);
-    res.send(users);
-})
+let users=[
+    {
+        id:1,
+        name:"Arnabh",
+    },
+    {
+        id:2,
+        name:"Abhisek",
+    },
+    {
+        id:3,
+        name:"Russ",
+    },
+];
 
-app.post('/users', (req, res)=>{
+//mini app
+const userRouter=express.Router();
+app.use('/users', userRouter)
+// base route
+userRouter
+.route('/')
+.get(getUser)
+.post(postUser)
+.patch(updateUser)
+.delete(deleteUser)
+
+userRouter
+.route('/:id')
+.get(getUserbyId)
+
+
+
+
+function getUser(req,res){
+    res.send(users);
+}
+
+function postUser(req, res){
     console.log(req.body);
     users=req.body;
     res.json({
         message:"data recieved",
         user:req.body
     })
-})
+}
 
-
-// update --> patch
-app.patch('/users', (req,res)=>{
+function updateUser (req,res){
     console.log('req.body-->', req.body);
     let dataTobeUpdated=req.body;
     for(key in req.body){
@@ -30,19 +59,17 @@ app.patch('/users', (req,res)=>{
     res.json({
         message:"data updated"
     })
-});
-
-app.delete('/users', (req,res)=>{
+}
+ 
+function deleteUser(req,res){
     users={};
     res.json({
         message:"data deleted"
     })
-})
+}
 
-// parameters
-
-app.get('/users/:id', (req, res)=>{
+function getUserbyId(req, res){
     console.log(req.params.id);
     res.send(" user id recieved");
     
-})
+}
