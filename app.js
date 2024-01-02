@@ -4,20 +4,7 @@ const mongoose=require('mongoose');
 app.use(express.json());
 app.listen(3000)
 
-let users=[
-    {
-        id:1,
-        name:"Arnabh",
-    },
-    {
-        id:2,
-        name:"Abhisek",
-    },
-    {
-        id:3,
-        name:"Russ",
-    },
-];
+
 
 //mini app
 const userRouter=express.Router();
@@ -28,7 +15,7 @@ app.use('/auth', authRouter);
 // base route
 userRouter
 .route('/')
-.get(getUser)
+.get(getUsers)
 .post(postUser)
 .patch(updateUser)
 .delete(deleteUser)
@@ -44,9 +31,12 @@ authRouter
 
 
 
-function getUser(req,res){
-    
-    res.send(users);
+async function getUsers(req,res){
+    let users= await userModel.findOne({name:Arnabh})
+    res.json({
+        message:'list of all users',
+        data:allUSers
+    });
 }
 
 function postUser(req, res){
@@ -58,19 +48,23 @@ function postUser(req, res){
     })
 }
 
-function updateUser (req,res){
+async function updateUser (req,res){
     console.log('req.body-->', req.body);
     let dataTobeUpdated=req.body;
-    for(key in req.body){
-        user[key]=dataTobeUpdated[key];
-    }
+    let users=await userModel.findOneAndUpdate({
+        email:'abc@gmail.com'
+    },dataTobeUpdated)
+    //for(key in req.body){
+      //  user[key]=dataTobeUpdated[key];
+    //}
     res.json({
         message:"data updated"
     })
 }
  
-function deleteUser(req,res){
-    users={};
+async function deleteUser(req,res){
+    //users={};
+    let user=await userModel.findOneAndDelete({email:'abc@gmail.com'})
     res.json({
         message:"data deleted"
     })
@@ -93,17 +87,20 @@ function middleware2(req, res){
     res.sendFile('/public/index.html',{root:__dirname})
 }
 
-function getSignUp(req, res, next){
+ function getSignUp(req, res, next){
+    
     console.log("getsignup called");
     
     next();
 }
 
-function postSignUp(req, res){
-    let obj=req.body;
+async function postSignUp(req, res){
+   
+    let dataObj=req.body;
+    let user=await userModel.create(dataObj)
     res.json({
         message:"user signed up",
-        data:obj
+        data:user
     })
 }
 const db_link='mongodb+srv://sinhaarnabh888:Arnabh_0205@cluster0.gqobuxc.mongodb.net/?retryWrites=true&w=majority';
@@ -142,14 +139,14 @@ const userSchema=mongoose.Schema({
 //model
 const userModel=mongoose.model('userModel',userSchema);
 
-(async function createUser(){
-    let user={
-        name:'Arnabh',
-        email:'abc@gmail.com',
-        password:'12345678',
-        confirmPassword:'12345678'
-    };
-    let data=await userModel.create(user);
-    console.log(data);
-})();
+//(async function createUser(){
+    //let user={
+      //  name:'Arnabh',
+       // email:'abc@gmail.com',
+       // password:'12345678',
+       // confirmPassword:'12345678'
+   // };
+    //let data=await userModel.create(user);
+    //console.log(data);
+//})();
 
