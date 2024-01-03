@@ -1,17 +1,17 @@
 const express = require('express')
 const app = express()
 const userModel=require('./models/userModel');
-
+const cookieParser=require('cookie-parser');
 app.use(express.json());
 app.listen(3000)
-
+app.use(cookieParser());
 
 
 //mini app
 const userRouter=express.Router();
 const authRouter=express.Router();
 
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 app.use('/auth', authRouter);
 // base route
 userRouter
@@ -20,6 +20,12 @@ userRouter
 .post(postUser)
 .patch(updateUser)
 .delete(deleteUser)
+
+userRouter.route('/getCookies')
+.get(getCookies);
+
+userRouter.route('/setCookies')
+.get(setCookies);
 
 userRouter
 .route('/:id')
@@ -107,8 +113,18 @@ async function postSignUp(req, res){
 
 
 
+function setCookies(req,res){
+    // res.setHeader('Set-Cookie', 'isLoggedIn=true');
+    res.cookie('isLoggedIn', true, {maxAge:1000*60*60*24, secure:true, httpOnly:true});
+    res.send('cookies has been sent');
+}
 
+function getCookies(req,res){
+   let cookies=req.cookies;
+   console.log(cookies);
+   res.send("cookies recieved");
 
+}
 
 
 
