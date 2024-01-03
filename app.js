@@ -10,7 +10,6 @@ const userRouter=require('./routers/userRouter');
 const authRouter=require('./routers/authRouter');
 //mini app
 
-
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 // base route

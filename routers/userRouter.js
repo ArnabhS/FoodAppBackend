@@ -1,7 +1,7 @@
 const express = require('express')
 const userRouter=express.Router();
 const userModel=require('../models/userModel');
-
+const protectRoute=require('./authHelper');
 
 userRouter
 .route('/')
@@ -22,10 +22,10 @@ userRouter
 
 
 async function getUsers(req,res){
-    let users= await userModel.findOne({name:Arnabh})
+    let users= await userModel.find();
     res.json({
         message:'list of all users',
-        data:allUSers
+        data:users
     });
 }
 
@@ -78,4 +78,9 @@ function getCookies(req,res){
 
 }
 
-module.exports=userRouter
+// let flag=true;
+
+
+
+
+module.exports=userRouter;
