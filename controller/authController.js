@@ -97,6 +97,12 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
                 next();
             }
             else {
+                //browser
+                const client=req.get('User-Agent');
+                if(client.includes("Mozilla")==true){
+                    return res.redirect('/login')
+                }
+                //postman
                 return res.json({
                     message: "please log in"
                 })
@@ -167,4 +173,11 @@ module.exports.resetpassword = async function resetpassword(req, res) {
             message: err.message
         })
     }
+}
+
+module.exports.logout=function logout(req, res){
+    res.cookie('login','',{maxAge:1});
+    res.json({
+        message:"user logged out succesfully"
+    })
 }

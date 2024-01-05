@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const emailValidator = require('email-validator');
 const bcrypt = require('bcrypt');
 const db_link = 'mongodb+srv://sinhaarnabh888:Arnabh_0205@cluster0.gqobuxc.mongodb.net/?retryWrites=true&w=majority';
-const crypto=require('crypto');
+const crypto = require('crypto');
 
 mongoose.connect(db_link)
     .then(function (db) {
@@ -76,15 +76,15 @@ userSchema.pre('save', function () {
 
 userSchema.methods.createResetToken = function () {
     //creating usertoken using npm crypto
-    const resetToken=crypto.randomBytes(32).toString('hex');
-    this.resetToken=resetToken;
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    this.resetToken = resetToken;
     return resetToken;
 }
 
-userSchema.methods.resetPasswordHandler=function(password, confirmPassword){
-    this.password=password;
-    this.confirmPassword=confirmPassword;
-    this.resetToken=undefined;
+userSchema.methods.resetPasswordHandler = function (password, confirmPassword) {
+    this.password = password;
+    this.confirmPassword = confirmPassword;
+    this.resetToken = undefined;
 }
 
 
