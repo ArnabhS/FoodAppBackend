@@ -15,6 +15,14 @@ userRouter.route('/signup')
 userRouter.route('/login')
   .post(login);
 
+userRouter
+  .route('/forgetpassword')
+  .post(forgetpassword);
+
+userRouter
+  .route('/resetpassword/:token')
+  .post(resetpassword);
+
 
 userRouter.use(protectRoute);
 userRouter.route('/userProfile')
