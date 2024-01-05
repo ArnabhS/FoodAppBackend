@@ -7,11 +7,11 @@ app.listen(3000)
 app.use(cookieParser());
 
 const userRouter=require('./routers/userRouter');
-const authRouter=require('./routers/authRouter');
+// const authRouter=require('./routers/authRouter');
 //mini app
 
 app.use('/user', userRouter);
-app.use('/auth', authRouter);
+// app.use('/auth', authRouter);
 // base route
 
 

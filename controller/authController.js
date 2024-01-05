@@ -1,7 +1,7 @@
 const express = require('express')
 const userModel=require('../models/userModel');
 const jwt=require('jsonwebtoken');
-const JWT_KEY=require('./secrets')
+const JWT_KEY='aslfhlasfhlsfhlsafhasflhas'
 
 //sign up
 module.exports.signup=async function signup(req, res){
@@ -69,7 +69,7 @@ module.exports.login=async function login(req, res){
 module.exports.isAuthorised=function isAuthorised(roles)
 {
     return function(req, res,next){
-        if(roles.include(req.role)==true){
+        if(roles.includes(req.role)==true){
             next()
         }
         else{
@@ -83,18 +83,23 @@ module.exports.isAuthorised=function isAuthorised(roles)
 // protect route
 module.exports.protectRoute=async function protectRoute(req, res, next){
     try{
+        let token;
     if(req.cookies.login){
+        console.log(req.cookies);
         token=req.cookies.login;
         let payload=jwt.verify(token, JWT_KEY);
         if(payload){
-       const user=await userModel.findById(payload);
+        console.log('paylod token',payload)    
+       const user=await userModel.findById(payload.payload);
        req.role=user.role;
        req.id=user.id;
+       console.log(req.role)
+       console.log(req.id)
        next();
         }
         else{
             return res.json({
-                message:"user not verified"
+                message:"please log in"
             })
         }    
         }
