@@ -69,7 +69,7 @@ module.exports.login = async function login(req, res) {
 module.exports.isAuthorised = function isAuthorised(roles) {
     return function (req, res, next) {
         if (roles.includes(req.role) == true) {
-            next()
+            next();
         }
         else {
             res.json({

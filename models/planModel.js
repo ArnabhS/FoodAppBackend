@@ -42,7 +42,7 @@ mongoose.connect(db_link)
 
 (async function createPlan(){
     let planObj={
-        name:"SuperFood",
+        name:"SuperFood100",
         duration:30,
         price:1000,
         ratingsAverage:5,

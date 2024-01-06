@@ -1,4 +1,4 @@
-const e = require('express');
+const express = require('express');
 const planModel = require('../models/planModel');
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
@@ -108,6 +108,10 @@ module.exports.updatePlan = async function updatePlan(req, res) {
                 plan[keys[i]] = dataToBeUpdataed[keys[i]];
             }
             await plan.save();
+            res.json({
+                message:'plan updated successfully',
+                data:plan
+            })
         }
         else {
             res.json({
