@@ -1,7 +1,7 @@
 const express = require('express');
 const planRouter = express.Router();
 const {protectRoute, isAuthorised}=require('../controller/authController');
-
+const{ getPlan, getAllPlans, createPlan, updatePlan, deletePlan}=require('../controller/planController');
 //own plan-->logged in necessary
 planRouter.use(protectRoute)
 planRouter
@@ -11,13 +11,13 @@ planRouter
 //all plans
 .planRouter
 .route('/allPlans')
-.get('getAllPlans')
+.get(getAllPlans)
 
 //onky admin and restruant owner can acess
 planRouter.use(isAuthorised['admin', 'restrauntowner'])
 planRouter
 .route('/crudPlan')
-.post(creeatePlan)
+.post(createPlan)
 .patch(updatePlan)
 .delete(deletePlan);
 
