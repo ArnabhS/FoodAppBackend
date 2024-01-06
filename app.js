@@ -14,6 +14,7 @@ app.use('/user', userRouter);
 // app.use('/auth', authRouter);
 // base route
 
+const planModel=require('./models/planModel');
 
 
 
